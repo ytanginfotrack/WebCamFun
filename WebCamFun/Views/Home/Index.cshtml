@@ -1,31 +1,47 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "CammyTron";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+@*<div class="jumbotron">
+        <h1>CammyTron</h1>
+        <p class="lead">Control your web cams using voice</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>*@
+
+
+<div id="container" style="width:480px;height:320px; display: inline;">
+    <video width="480" height="320" controls autoplay id="video1"></video>
+    <script>
+        var video = document.querySelector("#video1");
+
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({ video: true }, handleVideo, videoError);
+        }
+
+        function handleVideo(stream) {
+            video.src = window.URL.createObjectURL(stream);
+        }
+
+        function videoError(e) {
+            // do something
+        }
+
+    </script>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div style="width:480px;height:320px;display:inline">
+    <video id="video2" width="480" height="320" autoplay controls src="http://localhost:8080/vlc"></video>
 </div>
+
+
+<hr />
+<div class="container">
+    <ul id="message"></ul>
+    <ul id="error" class="text-danger"></ul>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/WebcamFun.js"></script>
+}

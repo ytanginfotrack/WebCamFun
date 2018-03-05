@@ -37,6 +37,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.min.js");
+    @Scripts.Render("~/Scripts/screenfull.min.js");
+    <script src="~/SignalR/hubs"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
