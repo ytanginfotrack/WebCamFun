@@ -1,14 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.IO;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Amazon.S3;
+using Amazon.S3.Model;
 using WebCamFun.Hubs;
 
 namespace WebCamFun.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IDashboardHub _dashboardHub;
+
+        public HomeController(IDashboardHub dashboardHub)
+        {
+            _dashboardHub = dashboardHub;
+            _dashboardHub.Run();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -33,11 +42,8 @@ namespace WebCamFun.Controllers
             return message;
         }
 
-        public void FullScreen(string camId, string message)
-        {
-            var hub = new DashboardHub();
+        
 
-            hub.FullscreenWebCam(camId, message);
-        }
+        
     }
 }

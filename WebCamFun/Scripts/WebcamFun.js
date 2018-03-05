@@ -4,13 +4,27 @@
  
     var dashboardHub = $.connection.dashboardHub;
 
-    dashboardHub.client.fullscreenWebCam = function (camId, message) {
-        var cam = document.getElementById(camId);
-        if (screenfull.enabled) {
-            screenfull.request(cam);
+    dashboardHub.client.switchCam = function (camId, message) {
+
+        if (camId === "0") {
+            $("video").removeClass("fullScreen");
+            $("video").show();
+            dashboardHub.client.showMesage(message);
+            return;
         }
 
-        dashboardHub.client.showMesage(message);
+        var $cam = $("#cam" + camId);
+        var $otherCams = $("video:not([id=\"cam" + camId + "\"])");
+        if ($cam.length) {
+            $otherCams.remove("fullScreen");
+            $otherCams.hide();
+            $cam.addClass("fullScreen");
+            $cam.show();
+            dashboardHub.client.showMesage(message);
+        } else {
+            $("video").removeClass("fullScreen").show();
+            dashboardHub.client.showErrorMessage("Cam " + camId + " not found");
+        }
     };
 
     dashboardHub.client.showMesage = function (message) {
@@ -25,7 +39,6 @@
     $.connection.hub.start().done(function () {
         console.log("started");
     }).fail(function (e) { dashboardHub.client.showErrorMessage(e); });
-
 
 });
 
